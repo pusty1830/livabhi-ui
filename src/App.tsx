@@ -58,7 +58,7 @@ function App() {
                 </Routes>
                 <Routes>
                   <Route path="/news&blogs" element={<NewsBlogs />} />
-                  <Route path="/news-details" element={<NewsDetails />} />
+                  <Route path="/news-details/:id" element={<NewsDetails />} />
                   <Route path="/artists" element={<Artists />} />
                   <Route path="/career" element={<Career />} />
                   <Route path="/job-details/:id" element={<JobDetailsPage />} />
