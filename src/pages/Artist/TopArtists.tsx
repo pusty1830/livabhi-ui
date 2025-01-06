@@ -62,10 +62,10 @@ const TopArtists: React.FC<TopArtistsProps> = ({ variant, artist }) => {
 
             width: "fit-content",
             margin: "auto",
-            mx: 8,
+            // mx: 8,
             mb: 4,
             py: 5,
-            boxShadow: "-5px -5px 15px #00000050 inset",
+            // boxShadow: "-5px -5px 15px #00000050 inset",
             // fontFamily: "Rosttel",
             // mt: 1,
             // textShadow: "0px 0px 8px rgba(0, 0, 0, 10)",

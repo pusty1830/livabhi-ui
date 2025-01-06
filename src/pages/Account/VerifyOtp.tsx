@@ -67,13 +67,13 @@ const VerifyOtp = () => {
                 backgroundSize: "cover",
                 backgroundPosition: "center",
                 width: "100%",
-                minHeight: "160vh",
+                minHeight: { xs: "90vh", md: "130vh" },
                 display: "flex",
                 mt: { xs: "-54px", md: "-94px" },
                 alignItems: "center",
                 "&::before": {
                     content: '""',
-                    height: "160vh",
+                    height: { xs: "90vh", md: "130vh" },
                     position: "absolute",
                     top: 0,
                     left: 0,
@@ -95,7 +95,7 @@ const VerifyOtp = () => {
                     zIndex: 2,
                 }}
             >
-                <Box
+                {/* <Box
                     sx={{
                         borderRadius: "8px",
                         backgroundImage: `url('/images/ADESO LOGO RGB.png')`,
@@ -108,7 +108,7 @@ const VerifyOtp = () => {
                         width: "120px",
                         margin: "20px 0px",
                     }}
-                ></Box>
+                ></Box> */}
                 <Box
                     display="flex"
                     flexDirection="column"

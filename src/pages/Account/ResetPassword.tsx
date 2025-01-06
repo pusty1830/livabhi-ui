@@ -1,8 +1,8 @@
 import {
-    Box,
-    Button,
-    Container,
-    Typography
+  Box,
+  Button,
+  Container,
+  Typography
 } from "@mui/material";
 import { useFormik } from "formik";
 import { useState } from "react";
@@ -39,13 +39,13 @@ const ResetPassword = () => {
         backgroundSize: "cover",
         backgroundPosition: "center",
         width: "100%",
-        minHeight: "160vh",
+        minHeight: { xs: "90vh", md: "130vh" },
         display: "flex",
         mt: { xs: "-54px", md: "-94px" },
         alignItems: "center",
         "&::before": {
           content: '""',
-          height: "160vh",
+          height: { xs: "90vh", md: "130vh" },
           position: "absolute",
           top: 0,
           left: 0,
@@ -67,7 +67,7 @@ const ResetPassword = () => {
           zIndex: 2,
         }}
       >
-        <Box
+        {/* <Box
           sx={{
             borderRadius: "8px",
             backgroundImage: `url('/images/ADESO LOGO RGB.png')`,
@@ -80,7 +80,7 @@ const ResetPassword = () => {
             width: "120px",
             margin: "20px 0px",
           }}
-        ></Box>
+        ></Box> */}
         <Box
           display="flex"
           flexDirection="column"
@@ -93,7 +93,7 @@ const ResetPassword = () => {
             border: "solid 2px ",
             zIndex: 2,
             borderColor: color.textColor1,
-            background:'white'
+            background: 'white'
           }}
           alignItems="center"
           mt={0}
@@ -113,7 +113,7 @@ const ResetPassword = () => {
               value={formik.values.password}
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
-              error={!!(formik.touched.password && formik.errors.password)} 
+              error={!!(formik.touched.password && formik.errors.password)}
               helperText={formik.touched.password && formik.errors.password}
               showPassword={showPassword}
               togglePasswordVisibility={togglePasswordVisibility}
@@ -126,7 +126,7 @@ const ResetPassword = () => {
               value={formik.values.confirmPassword}
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
-              error={!!(formik.touched.password && formik.errors.password)} 
+              error={!!(formik.touched.password && formik.errors.password)}
               helperText={
                 formik.touched.confirmPassword &&
                 formik.errors.confirmPassword

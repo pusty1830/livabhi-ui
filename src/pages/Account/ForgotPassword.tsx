@@ -25,13 +25,13 @@ const ForgotPassword = () => {
         backgroundSize: "cover",
         backgroundPosition: "center",
         width: "100%",
-        minHeight: "160vh",
+        minHeight: { xs: "90vh", md: "130vh" },
         display: "flex",
         mt: { xs: "-54px", md: "-94px" },
         alignItems: "center",
         "&::before": {
           content: '""',
-          height: "160vh",
+          height: { xs: "90vh", md: "130vh" },
           position: "absolute",
           top: 0,
           left: 0,
@@ -53,7 +53,7 @@ const ForgotPassword = () => {
           zIndex: 2,
         }}
       >
-        <Box
+        {/* <Box
           sx={{
             borderRadius: "0px",
             backgroundImage: `url('/images/ADESO LOGO RGB.png')`,
@@ -66,7 +66,7 @@ const ForgotPassword = () => {
             width: "120px",
             margin: "20px 0px",
           }}
-        ></Box>
+        ></Box> */}
         <Box
           display="flex"
           flexDirection="column"
@@ -77,15 +77,15 @@ const ForgotPassword = () => {
             borderRadius: "8px",
             mb: 6,
             border: "solid 2px",
-            borderColor:color.textColor1,
-            background:'white'
+            borderColor: color.textColor1,
+            background: 'white'
           }}
           alignItems="center"
           mt={0}
         >
           <Typography
             variant="h5"
-            sx={{ fontWeight: "bold", mb: "5%", color:color.textColor1, }}
+            sx={{ fontWeight: "bold", mb: "5%", color: color.textColor1, }}
             gutterBottom
           >
             Forgot Password

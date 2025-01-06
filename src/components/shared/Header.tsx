@@ -307,6 +307,7 @@ export const Header: React.FC = () => {
           top: -1,
           zIndex: 1100,
           boxShadow: 0,
+          overflow: "hidden"
         }}
       >
         <Toolbar
