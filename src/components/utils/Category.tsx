@@ -1,0 +1,123 @@
+import { Box, Button, Skeleton, Typography } from "@mui/material";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+
+type Category = {
+  name: string;
+  description: string;
+  value: string;
+  theme: string;
+};
+
+type EntityCategoryProps = {
+  categories: Category[];
+};
+
+const EntityCategory: React.FC<EntityCategoryProps> = ({ categories }) => {
+  const navigate = useNavigate();
+
+  const handleCardClick = (categoryName: string) => {
+    navigate(`/categories?filters=${encodeURIComponent(categoryName)}`);
+  };
+
+  const [imageLoaded, setImageLoaded] = useState(false);
+
+  return (
+    <Box>
+      <Box
+        display="flex"
+        flexWrap="wrap"
+        justifyContent="center"
+        alignItems={'center'}
+        gap="20px"
+        p={2}
+        mt={3}
+      >
+        {categories.map((category, index) => {
+          return (
+            <div
+              className="flip-card"
+              key={index}
+              style={{
+                width: "200px",
+                borderRadius: "12px",
+                overflow: "hidden",
+                cursor: "pointer",
+              }}
+              onClick={() => handleCardClick(category.name)}
+            >
+              <div className="flip-card-inner">
+                <div
+                  className="flip-card-front"
+                  style={{ position: "relative" }}
+                >
+                  {!imageLoaded && (
+                    <Skeleton
+                      variant="rectangular"
+                      width={200}
+                      height={200}
+                      style={{ borderRadius: "8px", position: "relative" }}
+                    ></Skeleton>
+                  )}
+                  <img
+                    src={`/assets/art category/${category.name}.jpg`}
+                    alt={category.name}
+                    onLoad={() => setImageLoaded(true)}
+                    style={{
+                      display: imageLoaded ? "block" : "none",
+                      width: "200px",
+                      height: "200px",
+                      borderRadius: "8px",
+                      objectFit: "cover",
+                      position: "relative",
+                    }}
+                  />
+                  {imageLoaded && (
+                    <Typography
+                      style={{
+                        position: "absolute",
+                        fontSize: "16px",
+                        color: "white",
+                        bottom: 5,
+                        left: 5,
+                      }}
+                    >
+                      {category.name}
+                    </Typography>
+                  )}
+                </div>
+
+                <div
+                  className="flip-card-back"
+                  style={{
+                    backgroundColor: category.theme,
+                    color: "#fff",
+                    padding: "10px",
+                    borderRadius: "8px",
+                    textAlign: "center",
+                    fontSize: "18px",
+                    display: "flex",
+                    flexDirection: "column",
+                    justifyContent: "space-around",
+                    alignItems: "center",
+                  }}
+                >
+                  <span>{category.name}</span>
+                  {category.description}
+                  <Button
+                    style={{ fontSize: "14px", marginLeft: "0px" }}
+                    id="custom-button"
+                  >
+                    See All
+                  </Button>
+                </div>
+              </div>
+            </div>
+          );
+        })}
+      </Box>
+    </Box>
+  );
+};
+
+export default EntityCategory;
