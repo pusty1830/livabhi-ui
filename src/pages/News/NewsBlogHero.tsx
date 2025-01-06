@@ -241,7 +241,7 @@ export const NewsBlogHero = ({ newsAndBlogs, recentPosts, featuredPosts }: NewsB
                         fontFamily: "custom-bold",
                       }}
                       onClick={() => {
-                        navigate("/news-details");
+                        navigate(`/news-details/${news.id}`);
                       }}
                       id="r-news-head-horz"
                     >
