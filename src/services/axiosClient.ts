@@ -5,7 +5,7 @@ import { jwtDecode } from "jwt-decode";
 
 // const BASE_URL = 'http://3.105.187.169:8080/api/'
 
-const BASE_URL="https://livabhi-server.vercel.app/api/"
+const BASE_URL="https://livabhi-server.vercel.app/api"
 
 
 export function getCurrentAccessToken() {
