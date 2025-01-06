@@ -1,9 +1,11 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import PosterCard from "../../components/cards/PosterCard";
 import color from "../../components/utils/Colors";
 import { Button, TextField } from "@mui/material";
 import { inputSx } from "../../components/utils/CommonStyle";
 import { SentimentDissatisfied } from "@mui/icons-material";
+import { getAllMovies } from "../../services/services";
+import { useNavigate } from "react-router-dom";
 
 const MoviePage = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -11,48 +13,64 @@ const MoviePage = () => {
 
 
   const genres = ["Sci-Fi", "Thriller", "Action", "Drama", "Adventure"];
-  const movies = [
-    {
-      id: 1,
-      title: "Inception",
-      genres: ["Sci-Fi", "Thriller"],
-      image: "inception.jpg",
-    },
-    {
-      id: 2,
-      title: "The Dark Knight",
-      genres: ["Action", "Drama"],
-      image: "dark_knight.jpg",
-    },
-    {
-      id: 3,
-      title: "Interstellar",
-      genres: ["Sci-Fi", "Drama"],
-      image: "interstellar.jpg",
-    },
-    {
-      id: 4,
-      title: "Joker",
-      genres: ["Drama", "Thriller"],
-      image: "joker.jpg",
-    },
-    {
-      id: 5,
-      title: "Avatar",
-      genres: ["Sci-Fi", "Adventure"],
-      image: "avatar.jpg",
-    },
-  ];
+  // const movies = [
+  //   {
+  //     id: 1,
+  //     title: "Inception",
+  //     genres: ["Sci-Fi", "Thriller"],
+  //     image: "inception.jpg",
+  //   },
+  //   {
+  //     id: 2,
+  //     title: "The Dark Knight",
+  //     genres: ["Action", "Drama"],
+  //     image: "dark_knight.jpg",
+  //   },
+  //   {
+  //     id: 3,
+  //     title: "Interstellar",
+  //     genres: ["Sci-Fi", "Drama"],
+  //     image: "interstellar.jpg",
+  //   },
+  //   {
+  //     id: 4,
+  //     title: "Joker",
+  //     genres: ["Drama", "Thriller"],
+  //     image: "joker.jpg",
+  //   },
+  //   {
+  //     id: 5,
+  //     title: "Avatar",
+  //     genres: ["Sci-Fi", "Adventure"],
+  //     image: "avatar.jpg",
+  //   },
+  // ];
+  const navigate = useNavigate();
+  const [movies, setMovies] = useState<any>([]);
+  useEffect(() => {
+    const payLoad = {
+      data: { filter: "" },
+      page: 0,
+      pageSize: 50,
+      order: [["createdAt", "ASC"]],
+    };
+    getAllMovies(payLoad).then((res) => {
+      console.log(res)
+      setMovies(res?.data?.data?.rows || [])
+    }).catch((err) => {
+      console.log(err);
+    })
+  }, [])
 
-  const filteredMovies = movies.filter((movie) => {
+  const filteredMovies = movies.filter((movie: any) => {
     const matchesGenres =
       selectedGenres.length > 0
-        ? selectedGenres.every((genre) => movie.genres.includes(genre))
+        ? selectedGenres.every((genre) => movie.genre.includes(genre))
         : true;
     const matchesSearch = movie.title.toLowerCase().includes(searchTerm.toLowerCase());
     return matchesGenres && matchesSearch;
   });
-  
+
   const toggleGenre = (genre: string) => {
     setSelectedGenres((prev) =>
       prev.includes(genre) ? prev.filter((g) => g !== genre) : [...prev, genre]
@@ -107,20 +125,21 @@ const MoviePage = () => {
           gap: "20px",
           color: "white",
           textAlign: "center",
-          minHeight:'40vh'
+          minHeight: '40vh'
         }}
       >
         {filteredMovies.length > 0 ? (
-          filteredMovies.map((movie) => (
+          filteredMovies.map((movie: any) => (
             <PosterCard
               key={movie.id}
               title={movie.title}
-              genre={movie.genres}
-              image={movie.image}
+              genre={movie.genre}
+              image={movie.images}
+              onClick={() => navigate(`/movies/details/${movie.id}`)}
             />
           ))
         ) : (
-            <p
+          <p
             style={{
               textAlign: "center",
               fontSize: "24px",
@@ -164,7 +183,7 @@ const MoviePage = () => {
               `}
             </style>
           </p>
-        
+
         )}
       </div>
     </div>

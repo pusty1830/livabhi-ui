@@ -9,13 +9,15 @@ interface PosterCardProps {
   title: string;
   genre: string[];
   image: string;
+  onClick?: () => void;
 }
 
-const PosterCard: React.FC<PosterCardProps> = ({ title, genre, image }) => {
+const PosterCard: React.FC<PosterCardProps> = ({ title, genre, image, onClick }) => {
   // const navigate = useNavigate();
 
   return (
     <Card
+      onClick={onClick}
       sx={{
         width: { md: 200, xs: "100%" },
         // minWidth: 280,
@@ -153,7 +155,7 @@ const PosterCard: React.FC<PosterCardProps> = ({ title, genre, image }) => {
               style={{ marginRight: "3px" }}
               icon={faVideo}
             ></FontAwesomeIcon>{" "}
-           {genre.join(', ')}
+            {genre}
           </Typography>
         </CardContent>
       </Box>

@@ -1,8 +1,10 @@
 import { Box, Container, Tab, Tabs, Typography } from "@mui/material";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import YouTube from "react-youtube";
 import color from "../../components/utils/Colors";
 import PosterCarousel from "../../components/utils/PosterCarousel";
+import { useParams } from "react-router-dom";
+import { getOneMovies } from "../../services/services";
 
 const PosterData = [
   {
@@ -58,7 +60,7 @@ const PosterData = [
 ];
 
 const movieData = {
-    poster:'',
+  poster: '',
   title: "Avengers: Infinity War",
   year: 2018,
   duration: "2h 23min",
@@ -79,104 +81,9 @@ const movieData = {
   images: ["/path/to/image1.jpg", "/path/to/image2.jpg", "/path/to/image3.jpg"],
 };
 
-const tabsData = {
-  overview: (
-    <>
-      <Typography>{movieData.overview}</Typography>
-      <Box mt={2}>
-        <Typography style={{ fontFamily: "custom-regular" }} fontWeight="bold">
-          Starring:
-        </Typography>
-        <Typography>{movieData.starring.join(", ")}</Typography>
-      </Box>
-      <Box mt={2}>
-        <Typography style={{ fontFamily: "custom-regular" }} fontWeight="bold">
-          Creators:
-        </Typography>
-        <Typography>{movieData.creators.join(", ")}</Typography>
-      </Box>
-      <Box mt={2}>
-        <Typography style={{ fontFamily: "custom-regular" }} fontWeight="bold">
-          Genre:
-        </Typography>
-        <Typography>{movieData.genre.join(", ")}</Typography>
-      </Box>
-    </>
-  ),
-  trailers: (
-    <>
-      <Box mt={0}>
-        <Typography fontWeight="bold" variant="h6">
-          Trailer:
-        </Typography>
-        <YouTube
-          videoId={movieData.trailer}
-          opts={{ width: "100%", height: "360" }}
-        />
-      </Box>
-      <Box mt={4}>
-        <Typography fontWeight="bold" variant="h6">
-          Images:
-        </Typography>
-        <Box display="flex" gap={2} mt={2}>
-          {movieData.images.map((src, index) => (
-            <img
-              key={index}
-              src={src}
-              alt={`Movie Scene ${index + 1}`}
-              style={{
-                width: "30%",
-                height: "auto",
-                borderRadius: 8,
-              }}
-            />
-          ))}
-        </Box>
-      </Box>
-    </>
-  ),
-  cast: (
-    <>
-      <Box mt={0}>
-        <Typography style={{ fontFamily: "custom-regular" }} fontWeight="bold">
-          Starring:
-        </Typography>
-        <Typography>{movieData.starring.join(", ")}</Typography>
-      </Box>
-      <Box mt={2}>
-        <Typography style={{ fontFamily: "custom-regular" }} fontWeight="bold">
-          Directed by:
-        </Typography>
-        <Typography>{movieData.directors.join(", ")}</Typography>
-      </Box>
-      <Box mt={2}>
-        <Typography style={{ fontFamily: "custom-regular" }} fontWeight="bold">
-          Written by:
-        </Typography>
-        <Typography>{movieData.writers.join(", ")}</Typography>
-      </Box>
-      <Box mt={2}>
-        <Typography style={{ fontFamily: "custom-regular" }} fontWeight="bold">
-          Produced by:
-        </Typography>
-        <Typography>{movieData.producers.join(", ")}</Typography>
-      </Box>
-      <Box mt={2}>
-        <Typography style={{ fontFamily: "custom-regular" }} fontWeight="bold">
-          Director of Photography:
-        </Typography>
-        <Typography>{movieData.dop.join(", ")}</Typography>
-      </Box>
-      <Box mt={2}>
-        <Typography style={{ fontFamily: "custom-regular" }} fontWeight="bold">
-          Music:
-        </Typography>
-        <Typography>{movieData.music.join(", ")}</Typography>
-      </Box>
-    </>
-  ),
-  details: movieData.plot,
-};
+
+
+
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -199,6 +106,113 @@ const MovieDetailsPage = () => {
     setTabIndex(newValue);
   };
 
+  const { id } = useParams();
+  const [movies, setMovies] = useState<any>({});
+  useEffect(() => {
+    getOneMovies(id).then((res) => {
+      setMovies(res?.data?.data)
+    }).catch((err) => {
+      console.log(err)
+    })
+  }, [])
+  const tabsData = {
+    overview: (
+      <>
+        <Typography>{movies.overview}</Typography>
+        <Box mt={2}>
+          <Typography style={{ fontFamily: "custom-regular" }} fontWeight="bold">
+            Starring:
+          </Typography>
+          <Typography>{movies.starring}</Typography>
+        </Box>
+        <Box mt={2}>
+          <Typography style={{ fontFamily: "custom-regular" }} fontWeight="bold">
+            Creators:
+          </Typography>
+          <Typography>{movies.creators}</Typography>
+        </Box>
+        <Box mt={2}>
+          <Typography style={{ fontFamily: "custom-regular" }} fontWeight="bold">
+            Genre:
+          </Typography>
+          <Typography>{movies.genre}</Typography>
+        </Box>
+      </>
+    ),
+    trailers: (
+      <>
+        <Box mt={0}>
+          <Typography fontWeight="bold" variant="h6">
+            Trailer:
+          </Typography>
+          <YouTube
+            videoId={movies.trailer}
+            opts={{ width: "100%", height: "360" }}
+          />
+        </Box>
+        <Box mt={4}>
+          <Typography fontWeight="bold" variant="h6">
+            Images:
+          </Typography>
+          <Box display="flex" gap={2} mt={2}>
+            {/* {movieData.images.map((src, index) => ( */}
+            <img
+
+              src={movies.images}
+              alt={`Movie Scene `}
+              style={{
+                width: "30%",
+                height: "auto",
+                borderRadius: 8,
+              }}
+            />
+            {/* ))} */}
+          </Box>
+        </Box>
+      </>
+    ),
+    cast: (
+      <>
+        <Box mt={0}>
+          <Typography style={{ fontFamily: "custom-regular" }} fontWeight="bold">
+            Starring:
+          </Typography>
+          <Typography>{movies.starring}</Typography>
+        </Box>
+        <Box mt={2}>
+          <Typography style={{ fontFamily: "custom-regular" }} fontWeight="bold">
+            Directed by:
+          </Typography>
+          <Typography>{movies.directors}</Typography>
+        </Box>
+        <Box mt={2}>
+          <Typography style={{ fontFamily: "custom-regular" }} fontWeight="bold">
+            Written by:
+          </Typography>
+          <Typography>{movies.writers}</Typography>
+        </Box>
+        <Box mt={2}>
+          <Typography style={{ fontFamily: "custom-regular" }} fontWeight="bold">
+            Produced by:
+          </Typography>
+          <Typography>{movies.producers}</Typography>
+        </Box>
+        <Box mt={2}>
+          <Typography style={{ fontFamily: "custom-regular" }} fontWeight="bold">
+            Director of Photography:
+          </Typography>
+          <Typography>{movies.dop}</Typography>
+        </Box>
+        <Box mt={2}>
+          <Typography style={{ fontFamily: "custom-regular" }} fontWeight="bold">
+            Music:
+          </Typography>
+          <Typography>{movies.music}</Typography>
+        </Box>
+      </>
+    ),
+    details: movies.plot,
+  };
   return (
     <Container
       maxWidth="lg"
@@ -215,8 +229,8 @@ const MovieDetailsPage = () => {
       >
         <Box flex={1}>
           <img
-            src={movieData.poster}
-            alt={movieData.title}
+            src={movies.poster}
+            alt={movies.title}
             style={{ width: "100%", borderRadius: 8 }}
           />
         </Box>
@@ -230,14 +244,14 @@ const MovieDetailsPage = () => {
           >
             <div>
               <Typography variant="h4" fontWeight="bold">
-                {movieData.title}
+                {movies.title}
               </Typography>
               <Typography variant="body1" color="textSecondary" mt={1}>
-                {movieData.year} | {movieData.duration} | {movieData.age}
+                {movies.year} | {movies.duration} | {movies.age}
               </Typography>
             </div>
 
-            <Typography variant="h5">{movieData.rating} ⭐</Typography>
+            <Typography variant="h5">{movies.rating}.0 ⭐</Typography>
           </div>
 
           <Tabs

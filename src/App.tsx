@@ -42,6 +42,7 @@ import AdminHomepage from "./pages/Admin/AdminHomepage";
 import MyOrderPage from "./pages/Account/MyOrderPage";
 import AddNewsandBlogsPage from "./pages/Admin/AddNewsandBlogs/AddNewsandBlogsPage";
 import EditNewsAndBlogs from "./pages/Admin/AddNewsandBlogs/EditNewsandBlogs";
+import AddMovie from "./pages/Admin/AddMovie";
 
 
 function App() {
@@ -90,7 +91,7 @@ function App() {
 
                   <Route path='/portfolio1/:id' element={<Portfolio1 />} />
                   <Route path='/movies' element={<MoviePage />} />
-                  <Route path='/movies/details' element={<MovieDetailsPage />} />
+                  <Route path='/movies/details/:id' element={<MovieDetailsPage />} />
 
                   <Route path='/privacy-policy' element={<PrivacyPolicyPage />} />
                   <Route path='/terms-conditions' element={<TermsAndConditionsPage />} />
@@ -99,6 +100,7 @@ function App() {
                   <Route path="/admin-dashboard" element={<AdminHomepage />} />
                   <Route path="/addnewsandblogs" element={<AddNewsandBlogsPage />} />
                   <Route path="/edit-news-and-blogs/:id" element={<EditNewsAndBlogs />} />
+                  <Route path="/add-movie" element={<AddMovie />} />
 
 
                 </Routes>

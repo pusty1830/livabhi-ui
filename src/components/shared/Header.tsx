@@ -109,7 +109,7 @@ export const Header: React.FC = () => {
     { label: "Artist", path: "/artists", icon: <PeopleIcon /> },
     { label: "Career", path: "/career", icon: <WorkIcon /> },
     { label: "Add News and Blogs", path: "/addnewsandblogs", roles: ["Admin"], userRole: user.role, icon: <WorkIcon /> },
-
+    { label: "Add Movies", path: "/add-movie", roles: ["Admin"], userRole: user.role, icon: <WorkIcon /> },
   ];
 
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);

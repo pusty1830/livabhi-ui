@@ -3,6 +3,7 @@ import NewsAndBlogsTable from "./AddNewsandBlogs/NewsBlogsTable";
 import { Box, Typography, Paper, Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import AllUsersTable from "./AllUserTable";
+import MoviesTable from "./MoviesTable";
 
 const AdminHomepage = () => {
     const navigate = useNavigate();
@@ -82,6 +83,31 @@ const AdminHomepage = () => {
                     User
                 </Typography>
                 <AllUsersTable />
+            </Paper>
+
+
+
+            {/* User  */}
+            <Paper
+                elevation={3}
+                sx={{
+                    padding: "24px",
+                    borderRadius: "12px",
+                    backgroundColor: "#fff",
+                    marginTop: '50px'
+                }}
+            >
+                <Typography
+                    variant="h5"
+                    sx={{
+                        fontWeight: "bold",
+                        marginBottom: "16px",
+                        color: "#333",
+                    }}
+                >
+                    Movies
+                </Typography>
+                <MoviesTable />
             </Paper>
         </Box>
     );

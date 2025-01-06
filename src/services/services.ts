@@ -179,3 +179,23 @@ export function deleteUser(id:any){
     return client.delete(`/User/delete-record/${id}`)
 }
 
+
+export  function createMovies(payLoad:any){
+    return client.post("/Movies/create",payLoad)
+}
+
+export function getAllMovies(payLoad:any){
+    return client.post("/Movies/search-record",payLoad)
+}
+
+export function updateMovies(payLoad:any,id:any){
+    return client.patch(`/Movies/update-record/${id}`,payLoad)
+}
+
+export function getOneMovies(id:any){
+    return client.get(`/Movies/get-one-record/${id}`)
+}
+
+export function deleteMovies(id:any){
+    return client.delete(`/Movies/delete-record/${id}`)
+}
