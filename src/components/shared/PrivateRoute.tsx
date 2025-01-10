@@ -14,13 +14,15 @@ const PrivateRoute: React.FC<PrivateRouteProps> = ({ component: Component }) => 
     if (!isAuthenticated) {
         // Redirect to login with the current path saved for redirecting after login
         return <Navigate to="/login/" state={{ from: location }} replace />;
+    } else {
+        return (
+            <>
+                <Component />
+            </>
+        );
     }
 
-    return (
-        <>
-            <Component />
-        </>
-    );
+
 };
 
 export default PrivateRoute;
