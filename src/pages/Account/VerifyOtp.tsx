@@ -15,6 +15,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { toast, ToastContentProps } from "react-toastify";
 import { resetPwdSchema } from "../../components/utils/schema";
 import { verifyOTP } from "../../services/services";
+import { inputSx } from "../../components/utils/CommonStyle";
 
 
 const VerifyOtp = () => {
@@ -143,6 +144,7 @@ const VerifyOtp = () => {
                             onBlur={formik.handleBlur}
                             error={!!(formik.touched.VerifyOtp && formik.errors.VerifyOtp)}
                             helperText={formik.touched.VerifyOtp && formik.errors.VerifyOtp}
+                            sx={inputSx}
                         />
 
                         <Button
@@ -177,3 +179,7 @@ const VerifyOtp = () => {
 };
 
 export default VerifyOtp;
+
+
+
+
