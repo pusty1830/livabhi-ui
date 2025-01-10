@@ -1,14 +1,14 @@
-import { Box, Typography } from "@mui/material";
-import "../Home.css";
-import { NewsBlogHero } from "./NewsBlogHero";
-import color from "../../components/utils/Colors";
-import NewsCarousel from "./NewsCarousel";
-import NewsVideoCarousel from "./NewsVideoCarousel";
 import { faCalendar, faUser } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { Box, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
-import { getAllNewsAndBlogs } from "../../services/services";
 import { useNavigate } from "react-router-dom";
+import color from "../../components/utils/Colors";
+import { getAllNewsAndBlogs } from "../../services/services";
+import "../Home.css";
+import { NewsBlogHero } from "./NewsBlogHero";
+import NewsCarousel from "./NewsCarousel";
+import NewsVideoCarousel from "./NewsVideoCarousel";
 
 export const NewsBlogs: React.FC = () => {
   const [heroNews, setHeroNews] = useState<any>([]);
@@ -32,11 +32,21 @@ export const NewsBlogs: React.FC = () => {
         // console.log(allNews)
 
         // Filter the data for each `newsType`
-        setHeroNews(allNews.filter((news: any) => news.newsType === "Hero Section"));
-        setTrendingNews(allNews.filter((news: any) => news.newsType === "Trending News"));
-        setNewsAndBlogs(allNews.filter((news: any) => news.newsType === "News & Blogs"));
-        setFeaturedPosts(allNews.filter((news: any) => news.newsType === "Featured Post"));
-        setRecentPosts(allNews.filter((news: any) => news.newsType === "Recent Posts"));
+        setHeroNews(
+          allNews.filter((news: any) => news.newsType === "Hero Section")
+        );
+        setTrendingNews(
+          allNews.filter((news: any) => news.newsType === "Trending News")
+        );
+        setNewsAndBlogs(
+          allNews.filter((news: any) => news.newsType === "News & Blogs")
+        );
+        setFeaturedPosts(
+          allNews.filter((news: any) => news.newsType === "Featured Post")
+        );
+        setRecentPosts(
+          allNews.filter((news: any) => news.newsType === "Recent Posts")
+        );
         setTrendingNewsVideos(
           allNews.filter((news: any) => news.newsType === "Trending News Video")
         );
@@ -53,12 +63,10 @@ export const NewsBlogs: React.FC = () => {
   if (isNaN(date.getTime())) {
     console.error("Invalid Date");
   } else {
-
     formattedDate = date.toISOString().split("T")[0];
     console.log(formattedDate);
   }
   const navigate = useNavigate();
-
 
   return (
     <>
@@ -66,20 +74,22 @@ export const NewsBlogs: React.FC = () => {
 
       <div
         style={{
-          background: color.firstColor,
+          background: color.thirdColor,
         }}
-        onClick={() => navigate(`/news-details/${heroNews[0]?.id}`)}
       >
         <Box
+          onClick={() => navigate(`/news-details/${heroNews[0]?.id}`)}
           sx={{
+            position: "relative",
             backgroundImage: `url(${heroNews[0]?.thumbnail})`,
             backgroundSize: "cover",
             backgroundPosition: "center",
             width: "100%",
-            height: "100vh",
+            height: { xs: "50vh", md: "100vh" },
             display: "flex",
             mt: { xs: "-54px", md: "-94px" },
             alignItems: "center",
+            mb: 2,
             "&::before": {
               content: '""',
               position: "absolute",
@@ -99,7 +109,8 @@ export const NewsBlogs: React.FC = () => {
               position: "absolute",
               bottom: 0,
               width: "100%",
-              height: "100%",
+              height: { xs: "50vh", md: "100vh" },
+
               background:
                 "linear-gradient(to top, rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0))",
               zIndex: 1,
@@ -110,7 +121,7 @@ export const NewsBlogs: React.FC = () => {
               position: "absolute",
               bottom: "5%",
               // transform: "translateX(10%)",
-              maxWidth: "100%",
+              maxWidth: "100vw",
               color: "white",
               p: 2,
               zIndex: 2,
@@ -119,8 +130,12 @@ export const NewsBlogs: React.FC = () => {
             <Typography
               sx={{
                 lineHeight: 1.2,
-
+                whiteSpace: "normal",
+                overflow: "hidden",
+                textOverflow: "ellipsis",
+                WebkitLineClamp: 3,
                 fontSize: "24px",
+                maxHeight: "3.6em",
               }}
             >
               {heroNews[0]?.description}
@@ -138,7 +153,8 @@ export const NewsBlogs: React.FC = () => {
                 }}
                 id="r-news-date"
               >
-                <FontAwesomeIcon icon={faCalendar} />{formattedDate}
+                <FontAwesomeIcon icon={faCalendar} />
+                {formattedDate}
               </Typography>
               <Typography
                 style={{
@@ -146,7 +162,8 @@ export const NewsBlogs: React.FC = () => {
                 }}
                 id="r-news-date"
               >
-                <FontAwesomeIcon icon={faUser} />{heroNews[0]?.author}
+                <FontAwesomeIcon icon={faUser} />
+                {heroNews[0]?.author}
               </Typography>
             </div>
           </Box>
@@ -154,9 +171,15 @@ export const NewsBlogs: React.FC = () => {
 
         <NewsCarousel trendingNews={trendingNews}></NewsCarousel>
 
-        <NewsBlogHero newsAndBlogs={newsAndBlogs} recentPosts={recentPosts} featuredPosts={featuredPosts}></NewsBlogHero>
+        <NewsBlogHero
+          newsAndBlogs={newsAndBlogs}
+          recentPosts={recentPosts}
+          featuredPosts={featuredPosts}
+        ></NewsBlogHero>
 
-        <NewsVideoCarousel trendingNewsVideos={trendingNewsVideos}></NewsVideoCarousel>
+        <NewsVideoCarousel
+          trendingNewsVideos={trendingNewsVideos}
+        ></NewsVideoCarousel>
       </div>
     </>
   );

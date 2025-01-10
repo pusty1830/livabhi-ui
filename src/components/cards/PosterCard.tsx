@@ -19,7 +19,7 @@ const PosterCard: React.FC<PosterCardProps> = ({ title, genre, image, onClick })
     <Card
       onClick={onClick}
       sx={{
-        width: { md: 200, xs: "100%" },
+        width: { md: 200, xs: "200px" },
         // minWidth: 280,
         background: "transparent",
         boxShadow: "0px 0px 20px rgba(0, 0, 0, 0.18)",

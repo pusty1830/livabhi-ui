@@ -14,12 +14,12 @@ code {
 
 @font-face {
   font-family: 'Custom-Bold';
-  src: url('/public/assets/fonts/Montserrat-Bold.ttf');
+  src: url('/public/assets/fonts/Sanchez-Regular.ttf');
 }
 
 @font-face {
   font-family: 'Custom-Regular';
-  src: url('/public/assets/fonts/Montserrat-Regular.ttf');
+  src: url('/public/assets/fonts/Sanchez-Regular.ttf');
 }
 
 @font-face {

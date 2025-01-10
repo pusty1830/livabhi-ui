@@ -76,7 +76,7 @@ const RenderRazorpay: React.FC<RenderRazorpayProps> = ({
           console.log(payLoad);
           createPayment(payLoad).then((res: any) => {
             console.log(res);
-            navigate("/mycorse");
+            navigate("/my-courses");
             localStorage.removeItem("cart");
           });
         } catch (error) {

@@ -1,44 +1,67 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCalendar, faChevronCircleRight, faUser } from "@fortawesome/free-solid-svg-icons";
 import { Box, Typography } from "@mui/material";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import color from "../../components/utils/Colors";
 import { useEffect, useState } from "react";
 import { getAllNewsAndBlogs, getOneNewsRecord } from "../../services/services";
 
 const NewsDetailsPage = () => {
-  // const navigate = useNavigate();
   const { id } = useParams();
   const [newdata, setNewData] = useState<any>(null);
-  const [newsdata, setNewsData] = useState<any>([])
+  const [newsdata, setNewsData] = useState<any>([]);
 
   useEffect(() => {
     getOneNewsRecord(id)
       .then((res) => {
-        console.log(res);
         setNewData(res?.data?.data);
       })
       .catch((err) => {
-        console.log(err);
+        console.error(err);
       });
   }, [id]);
+
   useEffect(() => {
-    const payLoad = {
-      data: { filter: "", newsType: newdata?.newsType },
-      page: 0,
-      pageSize: 10,
-      order: [["createdAt", "ASC"]],
+    if (newdata?.newsType) {
+      const payLoad = {
+        data: { filter: "", newsType: newdata.newsType },
+        page: 0,
+        pageSize: 10,
+        order: [["createdAt", "ASC"]],
+      };
+      getAllNewsAndBlogs(payLoad)
+        .then((res) => {
+          setNewsData(res.data.data?.rows);
+        })
+        .catch((err) => {
+          console.error(err);
+        });
     }
-    getAllNewsAndBlogs(payLoad).then((res) => {
-      setNewsData(res.data.data?.rows);
-    }).catch((err) => {
-      console.log(err);
-    })
-  }, [])
+  }, [newdata]);
+  // console.log(newdata.videoUrl)
+
+  // Helper function to determine if the media is a video
+  const isVideo = (url: string) => {
+    const videoExtensions = ["mp4", "webm", "ogg"];
+    const fileExtension = url?.split(".").pop()?.toLowerCase();
+    return videoExtensions.includes(fileExtension || "");
+  };
+
+  const isYouTubeVideo = (url: string) => {
+    return url.includes("youtube.com") || url.includes("youtu.be");
+  };
+
 
   if (!newdata) {
-    return <Typography>Loading...</Typography>; // Handle loading state
+    return <Typography>Loading...</Typography>;
   }
+  const getYouTubeVideoId = (url: string) => {
+    const regExp =
+      /^.*(?:youtu.be\/|v\/|embed\/|watch\?v=|watch\?.+&v=)([^#&?]*).*/;
+    const match = url.match(regExp);
+    return match && match[1].length === 11 ? match[1] : null;
+  };
+
 
   return (
     <Box
@@ -47,7 +70,7 @@ const NewsDetailsPage = () => {
         backgroundColor: "#ffffff",
         minHeight: "100vh",
         display: "flex",
-        flexDirection: { md: 'row', xs: 'column' },
+        flexDirection: { md: "row", xs: "column" },
         gap: 2,
       }}
     >
@@ -92,14 +115,60 @@ const NewsDetailsPage = () => {
 
           <Box
             sx={{
-              backgroundImage: `url(${newdata.thumbnail})`,
-              backgroundSize: "cover",
-              backgroundPosition: "center",
-              backgroundRepeat: "no-repeat",
+              backgroundColor: "#f0f0f0",
               minWidth: "105px",
               height: "400px",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
             }}
-          ></Box>
+          >
+            <Box
+              sx={{
+                backgroundColor: "#f0f0f0",
+                minWidth: "105px",
+                height: "400px",
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              {isYouTubeVideo(newdata.videoUrl) ? (
+                <iframe
+                  width="100%"
+                  height="100%"
+                  src={`https://www.youtube.com/embed/${getYouTubeVideoId(newdata.videoUrl)}`}
+                  title="YouTube video player"
+                  frameBorder="0"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                ></iframe>
+              ) : isVideo(newdata.videoUrl) ? (
+                <video
+                  src={newdata.videoUrl}
+                  controls
+                  style={{ width: "100%", height: "100%", objectFit: "cover" }}
+                  onError={(e) => {
+                    console.error("Video failed to load:", e);
+                    alert("Unable to play the video. Please check the video URL.");
+                  }}
+                />
+              ) : (
+                <Box
+                  sx={{
+                    backgroundImage: `url(${newdata.photoUrl})`,
+                    backgroundSize: "cover",
+                    backgroundPosition: "center",
+                    backgroundRepeat: "no-repeat",
+                    width: "100%",
+                    height: "100%",
+                  }}
+                />
+              )}
+
+            </Box>
+
+          </Box>
 
           <div
             style={{
@@ -135,10 +204,13 @@ const NewsDetailsPage = () => {
       >
         <Typography
           sx={{
-            background: color.firstColor, fontSize: '18px',
-            width: 'fit-content',
-            p: 1, borderRadius: '54px', px: 2,
-            boxShadow: '0px -5px 10px rgba(0, 0, 0, 0.37) inset'
+            background: color.firstColor,
+            fontSize: "18px",
+            width: "fit-content",
+            p: 1,
+            borderRadius: "54px",
+            px: 2,
+            boxShadow: "0px -5px 10px rgba(0, 0, 0, 0.37) inset",
           }}
         >
           Related Posts
@@ -157,7 +229,6 @@ const NewsDetailsPage = () => {
               borderRadius: "4px",
               marginTop: "20px",
               overflow: "hidden",
-              //   marginBottom: "15px",
             }}
           >
             <Box
@@ -169,8 +240,7 @@ const NewsDetailsPage = () => {
                 minWidth: "85px",
                 height: "85px",
               }}
-            ></Box>
-
+            />
             <div
               style={{
                 display: "flex",
@@ -193,23 +263,21 @@ const NewsDetailsPage = () => {
               <div
                 style={{
                   display: "flex",
-                  alignItems: 'center',
+                  alignItems: "center",
                   gap: "10px",
                   color: "black",
                 }}
               >
                 <Typography id="r-news-date">
-                  <FontAwesomeIcon icon={faCalendar} />{new Date(news.createdAt).toISOString().split("T")[0]}
+                  <FontAwesomeIcon icon={faCalendar} />{" "}
+                  {new Date(news.createdAt).toISOString().split("T")[0]}
                 </Typography>
                 <Typography id="r-news-date">
                   <FontAwesomeIcon icon={faUser} /> By {news.author}
                 </Typography>
                 <FontAwesomeIcon
                   style={{
-                    // color: color.textColor,
                     marginLeft: "5px",
-                    // background: news.theme,
-                    borderRadius: "50%",
                   }}
                   icon={faChevronCircleRight}
                 />

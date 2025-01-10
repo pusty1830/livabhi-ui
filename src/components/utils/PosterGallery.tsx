@@ -1,12 +1,12 @@
-import React from "react";
-import "react-multi-carousel/lib/styles.css";
+import { Card, CardContent, Container, Skeleton } from "@mui/material";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
+import React, { useEffect, useState } from "react";
+import "react-multi-carousel/lib/styles.css";
+import { useNavigate } from "react-router-dom";
+import { getAllMovies } from "../../services/services";
 import PosterCard from "../cards/PosterCard";
-import { Container } from "@mui/material";
 import color from "./Colors";
-
-
 
 interface PosterCarouselProps {
   title?: string;
@@ -31,65 +31,79 @@ interface PosterCarouselProps {
 //   },
 // };
 
-const PosterGallery: React.FC<PosterCarouselProps> = ({
-  title,
-}) => {
+const PosterGallery: React.FC<PosterCarouselProps> = ({ title }) => {
+  // const PosterData = [
+  //   {
+  //     title: "Liviyon",
+  //     genre: ["Post-Apocalyptic", "Sci-Fi"],
+  //     image: "/assets/poster-11.jpg",
+  //   },
+  //   {
+  //     title: "The Curse of Malgudi's Mango Mansion",
+  //     genre: ["Supernatural", "Horror", "Adventure"],
+  //     image: "/assets/poster-12.jpg",
+  //   },
+  //   {
+  //     title: "John Wick",
+  //     genre: ["Action", "Thriller"],
+  //     image: "/assets/poster-3.jpg",
+  //   },
+  //   {
+  //     title: "Zane's Last Journey",
+  //     genre: ["Sci-Fi", "Drama"],
+  //     image: "/assets/poster-13.jpg",
+  //   },
+  //   {
+  //     title: "Mystery of the Enchanted Woods",
+  //     genre: ["Fantasy", "Mystery", "Adventure"],
+  //     image: "/assets/poster-5.jpg",
+  //   },
+  //   {
+  //     title: "Shadows of the Forgotten",
+  //     genre: ["Psychological Thriller", "Mystery"],
+  //     image: "/assets/poster-6.jpg",
+  //   },
+  //   {
+  //     title: "The Phantom's Call",
+  //     genre: ["Horror", "Supernatural"],
+  //     image: "/assets/poster-7.jpg",
+  //   },
+  //   {
+  //     title: "Beyond the Horizon",
+  //     genre: ["Adventure", "Drama"],
+  //     image: "/assets/poster-8.jpg",
+  //   },
+  //   {
+  //     title: "Into the Abyss",
+  //     genre: ["Action", "Sci-Fi", "Thriller"],
+  //     image: "/assets/poster-9.jpg",
+  //   },
+  //   {
+  //     title: "The Unseen World",
+  //     genre: ["Fantasy", "Adventure"],
+  //     image: "/assets/poster-10.jpg",
+  //   },
+  // ];
 
-  const PosterData = [
-    {
-      title: "Liviyon",
-      genre: ["Post-Apocalyptic", "Sci-Fi"],
-      image: "/assets/poster-11.jpg",
-    },
-    {
-      title: "The Curse of Malgudi's Mango Mansion",
-      genre: ["Supernatural", "Horror", "Adventure"],
-      image: "/assets/poster-12.jpg",
-    },
-    {
-      title: "John Wick",
-      genre: ["Action", "Thriller"],
-      image: "/assets/poster-3.jpg",
-    },
-    {
-      title: "Zane's Last Journey",
-      genre: ["Sci-Fi", "Drama"],
-      image: "/assets/poster-13.jpg",
-    },
-    {
-      title: "Mystery of the Enchanted Woods",
-      genre: ["Fantasy", "Mystery", "Adventure"],
-      image: "/assets/poster-5.jpg",
-    },
-    {
-      title: "Shadows of the Forgotten",
-      genre: ["Psychological Thriller", "Mystery"],
-      image: "/assets/poster-6.jpg",
-    },
-    {
-      title: "The Phantom's Call",
-      genre: ["Horror", "Supernatural"],
-      image: "/assets/poster-7.jpg",
-    },
-    {
-      title: "Beyond the Horizon",
-      genre: ["Adventure", "Drama"],
-      image: "/assets/poster-8.jpg",
-    },
-    {
-      title: "Into the Abyss",
-      genre: ["Action", "Sci-Fi", "Thriller"],
-      image: "/assets/poster-9.jpg",
-    },
-    {
-      title: "The Unseen World",
-      genre: ["Fantasy", "Adventure"],
-      image: "/assets/poster-10.jpg",
-    },
-  ];
-  
+  const [movies, setMovies] = useState<any>([]);
+  useEffect(() => {
+    const payLoad = {
+      data: { filter: "" },
+      page: 0,
+      pageSize: 50,
+      order: [["createdAt", "ASC"]],
+    };
+    getAllMovies(payLoad)
+      .then((res) => {
+        console.log(res);
+        setMovies(res?.data?.data?.rows || []);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
 
-  
+  const navigate = useNavigate();
   return (
     <Container
       sx={(theme) => ({
@@ -161,14 +175,61 @@ const PosterGallery: React.FC<PosterCarouselProps> = ({
           width: "100%",
         }}
       >
-        {PosterData.map((production, index) => (
-          <PosterCard
-            // key={index}
-            title={production.title}
-            genre={production.genre}
-            image={production.image}
-          />
-        ))}
+        {!movies || movies.length === 0 ? (
+          <Box
+            p={4}
+            sx={{
+              width: "100%",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            <Card
+              sx={{
+                minHeight: "250px",
+                zIndex: 5,
+                width: 200,
+                background: "#f0f0f0",
+                boxShadow: "none",
+                borderRadius: "10px",
+                position: "relative",
+                overflow: "hidden",
+                // marginTop: "30px",
+              }}
+            >
+              <Skeleton
+                variant="rectangular"
+                height="100%"
+                style={{ borderRadius: "6px" }}
+              />
+              <CardContent
+                style={{
+                  paddingBottom: "16px",
+                  position: "absolute",
+                  bottom: 0,
+                  right: 0,
+                  width: "100%",
+                }}
+              >
+                <Skeleton variant="text" width="50%" height="30px" />
+                <Skeleton variant="text" width="40%" height="20px" />
+              </CardContent>
+            </Card>
+          </Box>
+        ) : (
+          <>
+            {movies.map((movie: any) => (
+              <PosterCard
+                key={movie.id}
+                title={movie.title}
+                genre={movie.genre}
+                image={movie.images}
+                onClick={() => navigate(`/movies/details/${movie.id}`)}
+              />
+            ))}
+          </>
+        )}
       </Box>
     </Container>
   );

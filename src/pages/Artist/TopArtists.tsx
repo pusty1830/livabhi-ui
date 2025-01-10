@@ -167,7 +167,7 @@ const TopArtists: React.FC<TopArtistsProps> = ({ variant, artist }) => {
             sx={{
               minHeight: "250px",
               zIndex: 5,
-              width: { md: 200, xs: "100%" },
+              width: { md: 200, xs: "200px" },
               background: "#f0f0f0",
               boxShadow: "0px 0px 40px rgba(0, 0, 0, 0.2)",
               borderRadius: "10px",
@@ -201,7 +201,7 @@ const TopArtists: React.FC<TopArtistsProps> = ({ variant, artist }) => {
           </Card>
         ) : (
           <>
-            {artist?.map((artist: any, index: any) => (
+            {artist?.slice(0, 10).map((artist: any, index: number) => (
               <ArtistsCard
                 key={index}
                 title={artist.firstName}

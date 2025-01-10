@@ -1,11 +1,11 @@
 import { createAxiosClient } from "./axiosConfig";
 import { jwtDecode } from "jwt-decode";
 
-// const BASE_URL = 'http://localhost:8080/api/'
+const BASE_URL = 'http://localhost:8080/api/'
 
 // const BASE_URL = 'http://3.105.187.169:8080/api/'
 
-const BASE_URL="https://livabhi-server.onrender.com/api"
+// const BASE_URL="https://livabhi-server.onrender.com/api"
 
 
 export function getCurrentAccessToken() {

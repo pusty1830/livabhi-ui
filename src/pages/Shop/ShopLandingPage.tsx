@@ -7,18 +7,18 @@ import {
   Skeleton,
   Typography,
 } from "@mui/material";
+import { useEffect, useState } from "react";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
-import ShopCard from "../../components/cards/ShopCard";
-import { responsive } from "../../components/utils/CommonStyle";
-import color from "../../components/utils/Colors";
-import EntityCategory from "../../components/utils/Category";
-import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import { getAllCourse } from "../../services/services";
+import ShopCard from "../../components/cards/ShopCard";
+import EntityCategory from "../../components/utils/Category";
+import color from "../../components/utils/Colors";
+import { responsive } from "../../components/utils/CommonStyle";
 import { artCategories } from "../../components/utils/data";
 import SearchBar from "../../components/utils/SearchBar";
+import { getAllCourse } from "../../services/services";
 
 export const ShopLandingPage: React.FC = () => {
   // const booksData = [
@@ -96,7 +96,7 @@ export const ShopLandingPage: React.FC = () => {
     };
     getAllCourse(payLoad)
       .then((res: any) => {
-        console.log(res?.data?.data?.rows[0]);
+        console.log("j", res?.data?.data?.rows[0]);
         setBooksData(res?.data?.data?.rows);
       })
       .catch((err: any) => {
@@ -195,7 +195,7 @@ export const ShopLandingPage: React.FC = () => {
           <Box
             sx={{
               maxWidth: "600px",
-              width:'80%',
+              width: "80%",
               position: "absolute",
               zIndex: 100,
               top: "40%",
@@ -228,7 +228,184 @@ export const ShopLandingPage: React.FC = () => {
               customLeftArrow={<CustomLeftArrow />}
               customRightArrow={<CustomRightArrow />}
               draggable={false}
-              //   autoPlay={true}
+            //   autoPlay={true}
+            >
+              {!booksData || booksData.length === 0 ? (
+                <Box
+                  p={4}
+                  sx={{
+                    width: "100%",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                  }}
+                >
+                  <Card
+                    sx={{
+                      minHeight: "336px",
+                      zIndex: 5,
+                      width: { md: 300, xs: 300 },
+                      background: "#f0f0f0",
+                      boxShadow: "none",
+                      borderRadius: "10px",
+                      position: "relative",
+                      overflow: "hidden",
+                      // marginTop: "30px",
+                    }}
+                  >
+                    <CardContent
+                      style={{
+                        padding: 0,
+                        position: "absolute",
+                        top: -5,
+                        right: 0,
+                      }}
+                    >
+                      <Skeleton variant="text" width="60px" height="30px" />
+                    </CardContent>
+                    <Skeleton
+                      variant="rectangular"
+                      height="200px"
+                      style={{ borderRadius: "6px" }}
+                    />
+                    <CardContent
+                      style={{
+                        paddingBottom: "16px",
+                        // position: "absolute",
+                        bottom: 0,
+                        right: 0,
+                        width: "100%",
+                      }}
+                    >
+                      <Skeleton variant="text" width="60%" height="30px" />
+                      <Skeleton variant="text" width="40%" height="30px" />
+                      <Box
+                        sx={{
+                          display: "flex",
+                          justifyContent: "space-between",
+                        }}
+                      >
+                        <Skeleton variant="text" width="40%" height="40px" />
+                        <Skeleton variant="text" width="40%" height="40px" />
+                      </Box>
+                      {/* <Skeleton variant="text" width="80%" height="50px" /> */}
+                    </CardContent>
+                  </Card>
+                </Box>
+              ) : (
+                booksData.map((book: any, index: any) => (
+                  <Box
+                    onClick={() => navigate(`/productDetails/${book?.id}`)}
+                    key={index}
+                    p={4}
+                    sx={{
+                      width: "100%",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                    }}
+                  >
+                    <ShopCard {...book} />
+                  </Box>
+                ))
+              )}
+            </Carousel>
+          </Box>
+
+          <Box>
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "space-around",
+                flexWrap: "wrap",
+                height: "0px",
+              }}
+            >
+              {/* <img
+              src="/assets/shop banner 5.png"
+              alt="banner"
+              style={{
+                display: "block",
+                width: "100%",
+                height: "300px",
+                borderRadius: "8px",
+                objectFit: "cover",
+                position: "relative",
+              }}
+            /> */}
+
+              {/* <img
+                src="/assets/shop banner 3.png"
+                alt="banner"
+                style={{
+                  display: "block",
+                  width: "300px",
+                  height: "100%",
+                  borderRadius: "8px",
+                  objectFit: "contain",
+                  position: "relative",
+                }}
+              /> */}
+
+              {/* <img
+              src="/assets/shop banner 4.png"
+              alt="banner"
+              style={{
+                display: "block",
+                width: "100%",
+                height: "100%",
+                borderRadius: "8px",
+                objectFit: "contain",
+                position: "relative",
+              }}
+            /> */}
+            </Box>
+
+            <img
+              src="/assets/shop banner 8.png"
+              alt="banner"
+              style={{
+                display: "block",
+                width: "100%",
+                maxHeight: "400px",
+                borderRadius: "8px",
+                objectFit: "contain",
+                position: "relative",
+                background: "black",
+              }}
+            />
+          </Box>
+
+          <Typography sx={{ fontSize: "28px", my: 2, mb: 1, pl: 2 }}>
+            Explore Categories :
+          </Typography>
+          <EntityCategory categories={artCategories} />
+
+          <img
+            src="/assets/shop banner 9.png"
+            alt="banner"
+            style={{
+              display: "block",
+              width: "100%",
+              maxHeight: "400px",
+              borderRadius: "8px",
+              objectFit: "contain",
+              position: "relative",
+            }}
+          />
+
+          <Typography sx={{ fontSize: "28px", my: 2, mb: 1, pl: 2 }}>
+            Top Music Courses :
+          </Typography>
+
+          <Box sx={{ m: 0, position: "relative" }}>
+            <Carousel
+              responsive={responsive}
+              infinite
+              customLeftArrow={<CustomLeftArrow />}
+              customRightArrow={<CustomRightArrow />}
+              draggable={false}
+            //   autoPlay={true}
             >
               {!booksData || booksData.length === 0 ? (
                 <Box
@@ -294,30 +471,27 @@ export const ShopLandingPage: React.FC = () => {
                 </Box>
               ) : (
                 <>
-                  {booksData.map((book: any, index: any) => (
-                    <Box
-                      onClick={() => navigate(`/productDetails/${book?.id}`)}
-                      key={index}
-                      p={4}
-                      sx={{
-                        width: "100%",
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                      }}
-                    >
-                      <ShopCard {...book} />
-                    </Box>
-                  ))}
+                  {booksData
+                    .filter((book: any) => book.category === "Music")
+                    .map((book: any, index: any) => (
+                      <Box
+                        onClick={() => navigate(`/productDetails/${book?.id}`)}
+                        key={index}
+                        p={4}
+                        sx={{
+                          width: "100%",
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "center",
+                        }}
+                      >
+                        <ShopCard {...book} />
+                      </Box>
+                    ))}
                 </>
               )}
             </Carousel>
           </Box>
-
-          <Typography sx={{ fontSize: "28px", my: 2, mb: 1, pl: 2 }}>
-            Explore Categories :
-          </Typography>
-          <EntityCategory categories={artCategories} />
         </Box>
       </div>
     </>

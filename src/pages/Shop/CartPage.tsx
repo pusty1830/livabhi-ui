@@ -51,7 +51,7 @@ const CartPage: React.FC = () => {
       };
 
       console.log("Payload sent to createOrderinDB:", payLoad1);
-      await createOrderinDB(payLoad1);
+      // await createOrderinDB(payLoad1);
       setOrderDetails(response.data.data);
     } catch (error) {
       console.error("Error during payment:", error);

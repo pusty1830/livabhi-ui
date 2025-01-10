@@ -43,6 +43,8 @@ import MyOrderPage from "./pages/Account/MyOrderPage";
 import AddNewsandBlogsPage from "./pages/Admin/AddNewsandBlogs/AddNewsandBlogsPage";
 import EditNewsAndBlogs from "./pages/Admin/AddNewsandBlogs/EditNewsandBlogs";
 import AddMovie from "./pages/Admin/AddMovie";
+import PrivateRoute from "./components/shared/PrivateRoute";
+
 
 
 function App() {
@@ -58,40 +60,41 @@ function App() {
                   <Route path="/" element={<Home />} />
                 </Routes>
                 <Routes>
-                  <Route path="/news&blogs" element={<NewsBlogs />} />
-                  <Route path="/news-details/:id" element={<NewsDetails />} />
-                  <Route path="/artists" element={<Artists />} />
-                  <Route path="/career" element={<Career />} />
-                  <Route path="/job-details/:id" element={<JobDetailsPage />} />
-                  <Route path="/job-application-form" element={<JobApplicationForm />} />
+                  <Route path="/news&blogs" element={<PrivateRoute component={NewsBlogs} />} />
+                  <Route path="/news-details/:id" element={<PrivateRoute component={NewsDetails} />} />
+                  <Route path="/artists" element={<PrivateRoute component={Artists} />} />
+                  <Route path="/career" element={<PrivateRoute component={Career} />} />
+
+                  <Route path="/job-details/:id" element={<PrivateRoute component={JobDetailsPage} />} />
+                  <Route path="/job-application-form" element={<PrivateRoute component={JobApplicationForm} />} />
                   <Route path="/login" element={<LoginPage />} />
                   <Route path="/signup" element={<SignupPage />} />
-                  <Route path="/account" element={<Account />} />
-                  <Route path="/course-upload" element={<CourseUploadForm />} />
-                  <Route path="/upload" element={<UploadCourse />} />
+                  <Route path="/account" element={<PrivateRoute component={Account} />} />
+                  <Route path="/course-upload" element={<PrivateRoute component={CourseUploadForm} />} />
+                  <Route path="/upload" element={<PrivateRoute component={UploadCourse} />} />
 
-                  <Route path="/portfolio/:id" element={<Portfolio />} />
-                  <Route path="/portfolio-form" element={<PortfolioFormTabs />} />
-                  <Route path="/mycorse" element={<AristMyCourse />} />
+                  <Route path="/portfolio/:id" element={<PrivateRoute component={Portfolio} />} />
+                  <Route path="/portfolio-form" element={<PrivateRoute component={PortfolioFormTabs} />} />
+                  <Route path="/mycorse" element={<PrivateRoute component={AristMyCourse} />} />
 
                   <Route path="/forgot-password" element={<ForgotPassword />} />
-                  <Route path="/reset-password" element={<ResetPassword />} />
-                  <Route path="/shop" element={<ShopLandingPage />} />
-                  <Route path="/productDetails/:id" element={<ProductDetails />} />
-                  <Route path="/cart" element={<CartPage />} />
+                  <Route path="/reset-password" element={<PrivateRoute component={ResetPassword} />} />
+                  <Route path="/shop" element={<PrivateRoute component={ShopLandingPage} />} />
+                  <Route path="/productDetails/:id" element={<PrivateRoute component={ProductDetails} />} />
+                  <Route path="/cart" element={<PrivateRoute component={CartPage} />} />
                   <Route path="/verify-otp" element={<VerifyOtp />} />
                   <Route path="/job-post" element={<JobPostingForm />} />
-                  <Route path="/player/:id" element={<Player />} />
-                  <Route path="/artist-courses" element={<AristMyCourse />} />
-                  <Route path="/my-order" element={<MyOrderPage />} />
+                  <Route path="/player/:id" element={<PrivateRoute component={Player} />} />
+                  <Route path="/artist-courses" element={<PrivateRoute component={AristMyCourse} />} />
+                  <Route path="/my-order" element={<PrivateRoute component={MyOrderPage} />} />
 
-                  <Route path="/my-courses" element={<MyCourses />} />
-                  <Route path="/courseDetails" element={<CourseDetails />} />
+                  <Route path="/my-courses" element={<PrivateRoute component={MyCourses} />} />
+                  <Route path="/courseDetails" element={<PrivateRoute component={CourseDetails} />} />
                   <Route path="/categories" element={<CategoryPage />} />
 
-                  <Route path='/portfolio1/:id' element={<Portfolio1 />} />
-                  <Route path='/movies' element={<MoviePage />} />
-                  <Route path='/movies/details/:id' element={<MovieDetailsPage />} />
+                  <Route path='/portfolio1/:id' element={<PrivateRoute component={Portfolio1} />} />
+                  <Route path='/movies' element={<PrivateRoute component={MoviePage} />} />
+                  <Route path='/movies/details/:id' element={<PrivateRoute component={MovieDetailsPage} />} />
 
                   <Route path='/privacy-policy' element={<PrivacyPolicyPage />} />
                   <Route path='/terms-conditions' element={<TermsAndConditionsPage />} />

@@ -54,44 +54,44 @@ export const Home: React.FC = () => {
 
   useEffect(() => {
     const fetchArtists = async () => {
-      if (isLoggedIn()) {
-        try {
-          const payLoad = {
-            data: { filter: "" },
-            page: 0,
-            pageSize: 50,
-            order: [["createdAt", "ASC"]],
-          };
-          const response = await getAllArtist(payLoad);
-          setArtist(response?.data?.data?.rows || []);
-        } catch (error) {
-          console.error("Error fetching artist data:", error);
-        }
+
+      try {
+        const payLoad = {
+          data: { filter: "" },
+          page: 0,
+          pageSize: 50,
+          order: [["createdAt", "ASC"]],
+        };
+        const response = await getAllArtist(payLoad);
+        setArtist(response?.data?.data?.rows || []);
+      } catch (error) {
+        console.error("Error fetching artist data:", error);
       }
+
     };
 
     fetchArtists();
   }, []);
-  const [trendingnews, setTrendingNews] = useState<any>([])
+  const [trendingnews, setTrendingNews] = useState<any>([]);
 
   useEffect(() => {
     const fetchNews = async () => {
-      if (isLoggedIn()) {
-        try {
-          const payLoad = {
-            data: { filter: "" },
-            page: 0,
-            pageSize: 50,
-            order: [["createdAt", "ASC"]],
-          };
 
-          const res = await getAllNewsAndBlogs(payLoad)
+      try {
+        const payLoad = {
+          data: { filter: "" },
+          page: 0,
+          pageSize: 50,
+          order: [["createdAt", "ASC"]],
+        };
 
-          setTrendingNews(res?.data?.data?.rows || []);
-        } catch (error) {
-          console.error("Error fetching artist data:", error);
-        }
+        const res = await getAllNewsAndBlogs(payLoad);
+
+        setTrendingNews(res?.data?.data?.rows || []);
+      } catch (error) {
+        console.error("Error fetching artist data:", error);
       }
+
     };
 
     fetchNews();
@@ -107,12 +107,13 @@ export const Home: React.FC = () => {
             backgroundSize: "cover",
             backgroundPosition: "center",
             width: "100%",
-            height: "100vh",
+            height: { xs: "50vh", md: "100vh" },
             display: "flex",
             mt: { xs: "-54px", md: "-94px" },
             alignItems: "center",
             "&::before": {
               content: '""',
+              height: { xs: "50vh", md: "100vh" },
               position: "absolute",
               top: 0,
               left: 0,
@@ -178,7 +179,10 @@ export const Home: React.FC = () => {
             <NewsBlog></NewsBlog>
           </div> */}
 
+          {/* <Box  sx={{border:'solid 5px white', background:'black', mt:2,borderRadius:2}}> */}
+
           <TopArtists variant="heading2" artist={artist}></TopArtists>
+          {/* </Box> */}
 
           <CoursesCarousel textused={true}></CoursesCarousel>
 

@@ -76,7 +76,7 @@ export const Header: React.FC = () => {
   // }, []);
 
   const [user, setUser] = useState<any>({});
-
+  // console.log(user)
   useEffect(() => {
     const fetchUser = async () => {
       if (isLoggedIn()) {
@@ -93,6 +93,7 @@ export const Header: React.FC = () => {
     fetchUser();
   }, []);
 
+  console.log(user.role)
   const menuItems = [
     {
       label: "Home",
@@ -421,7 +422,7 @@ export const Header: React.FC = () => {
                     sx={{
                       minWidth: "30px",
                       ml: 2,
-                      color: color.textColor2,
+                      color: 'white',
                       p: "4px",
                     }}
                   >
@@ -470,7 +471,7 @@ export const Header: React.FC = () => {
                           src={user?.profileImage}
                           alt={user?.name || "User"}
                         ></Avatar>
-                        <Typography>{user?.name || "User"}</Typography>
+                        <Typography>{user?.firstName || "User"} {user?.lastName}</Typography>
                         <Typography sx={{ fontSize: '14px', fontFamily: 'custom-regular' }}>{user?.role || "User"}</Typography>
                       </div>
 

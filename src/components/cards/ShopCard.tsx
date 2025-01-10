@@ -114,7 +114,7 @@ const ShopCard: React.FC<ShopCardProps> = ({
             transition: "transform 0.5s ease-in-out",
           }}
         >
-          {discount}20% <br /> OFF
+          {discount}% <br /> OFF
         </Typography>
 
         {/* <IconButton
@@ -174,6 +174,7 @@ const ShopCard: React.FC<ShopCardProps> = ({
               color="primary"
               size="small"
               style={{
+                whiteSpace: 'nowrap',
                 background: color.textColor1,
                 fontSize: "14px",
                 textTransform: "none",

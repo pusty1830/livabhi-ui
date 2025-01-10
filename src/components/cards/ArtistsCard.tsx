@@ -27,11 +27,11 @@ const ArtistsCard: React.FC<ArtistCardProps> = ({
 
   return (
     <Card
-    onClick={onClick}
+      onClick={onClick}
       sx={{
         minHeight: "250px",
         zIndex: 5,
-        width: { md: 200, xs: "100%" },
+        width: { md: 200, xs: 250 },
         background: theme,
         boxShadow: "0px 0px 40px rgba(0, 0, 0, 0.2)",
         border: "solid 1px",
@@ -119,7 +119,7 @@ const ArtistsCard: React.FC<ArtistCardProps> = ({
               position: "relative",
             }}
           >
-            {profession} 
+            {profession}
           </Typography>
           <Typography
             gutterBottom

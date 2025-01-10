@@ -70,7 +70,7 @@ const SignupPage = () => {
 
   const isMobile1 = useMediaQuery("(max-width:700px)");
 
-  const userRoles = ["User", "Artist", "Business", "Administrator"];
+  const userRoles = ["User", "Artist", "Business", "Admin"];
 
   const [role, setRole] = useState<string>("User");
 
@@ -82,14 +82,14 @@ const SignupPage = () => {
         backgroundPosition: "center",
         width: "100%",
         // minHeight: "160vh",
-        minHeight: { xs: "120vh",md:"160vh"},
-        
+        minHeight: { xs: "120vh", md: "160vh" },
+
         display: "flex",
         mt: { xs: "-54px", md: "-94px" },
         alignItems: "center",
         "&::before": {
           content: '""',
-          height:{ xs: "120vh",md:"160vh"},
+          height: { xs: "120vh", md: "160vh" },
           position: "absolute",
           top: 0,
           left: 0,
@@ -172,7 +172,7 @@ const SignupPage = () => {
             alignItems: "center",
             justifyContent: "center",
             border: "solid 0px #0079c1",
-            
+
           }}
         >
           <Typography
@@ -195,8 +195,8 @@ const SignupPage = () => {
           <Box
             sx={{
               borderRadius: "8px",
-              backgroundImage: `url('/images/ADESO LOGO RGB.png')`,
-              backgroundSize: "90%",
+              backgroundImage: `url('/assets/logo.png')`,
+              backgroundSize: "60%",
               boxShadow: "0px 0px 20px rgba(255,255,255,0.5)",
               backgroundRepeat: "no-repeat",
               backgroundPosition: "center",

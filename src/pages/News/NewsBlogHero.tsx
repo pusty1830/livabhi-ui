@@ -6,8 +6,8 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Box, Typography } from "@mui/material";
 import Carousel from "react-multi-carousel";
-import color from "../../components/utils/Colors";
 import { useNavigate } from "react-router-dom";
+import color from "../../components/utils/Colors";
 
 interface NewsBlogHero {
   newsAndBlogs: any[];
@@ -15,7 +15,11 @@ interface NewsBlogHero {
   featuredPosts: any[];
 }
 
-export const NewsBlogHero = ({ newsAndBlogs, recentPosts, featuredPosts }: NewsBlogHero) => {
+export const NewsBlogHero = ({
+  newsAndBlogs,
+  recentPosts,
+  featuredPosts,
+}: NewsBlogHero) => {
   const responsive = {
     superLargeDesktop: {
       breakpoint: { max: 3000, min: 1024 },
@@ -35,7 +39,6 @@ export const NewsBlogHero = ({ newsAndBlogs, recentPosts, featuredPosts }: NewsB
     },
   };
 
-
   const newsData1 = [
     {
       id: 1,
@@ -44,7 +47,7 @@ export const NewsBlogHero = ({ newsAndBlogs, recentPosts, featuredPosts }: NewsB
         "Amin is another niche-specific news website template. This template is designed for gaming news sites. Stylish fonts and bright colors give this template a typical gaming website look. Elements are made sharper to give a sturdy look to the template.",
       date: "Aug 10, 2019",
       author: "Ramael Rog",
-    }
+    },
   ];
   const newsData2 = [
     {
@@ -74,7 +77,7 @@ export const NewsBlogHero = ({ newsAndBlogs, recentPosts, featuredPosts }: NewsB
           }}
         >
           <Typography
-            style={{ background: color.firstColor }}
+            // style={{ background: color.firstColor }}
             className="heading2"
           >
             News & Blogs
@@ -96,6 +99,7 @@ export const NewsBlogHero = ({ newsAndBlogs, recentPosts, featuredPosts }: NewsB
               display: "flex",
               flexDirection: "column",
               justifyContent: "space-between",
+              overflow: "hidden",
             }}
           >
             <div
@@ -103,6 +107,8 @@ export const NewsBlogHero = ({ newsAndBlogs, recentPosts, featuredPosts }: NewsB
                 padding: "16px",
                 background: "white",
                 borderRadius: "12px",
+                overflow: "hidden",
+                maxWidth: "100vw",
               }}
             >
               <Carousel
@@ -112,65 +118,65 @@ export const NewsBlogHero = ({ newsAndBlogs, recentPosts, featuredPosts }: NewsB
                 arrows={false}
               //   autoPlay={true}
               >
-                <Box
-                  className="smooth-scale"
-                  sx={{
-                    backgroundImage: "url(/assets/news-7.jpg)",
-                    backgroundSize: "cover",
-                    backgroundPosition: "center bottom",
-                    backgroundRepeat: "no-repeat",
-                    height: "370px",
-                    width: "100%",
-                    position: "relative",
-                    borderRadius: "12px",
-                    overflow: "hidden",
-                  }}
-                >
+                {newsAndBlogs.map((news) => (
                   <Box
+                    className="smooth-scale"
                     sx={{
-                      opacity: "0.8",
-                      position: "absolute",
-                      bottom: 0,
+                      backgroundImage: `url(${news.thumbnail})`,
+                      backgroundSize: "cover",
+                      backgroundPosition: "center bottom",
+                      backgroundRepeat: "no-repeat",
+                      height: "370px",
                       width: "100%",
-                      height: "100%",
-                      background:
-                        "linear-gradient(to top, rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0))",
-                      zIndex: 1,
-                    }}
-                  />
-                  <Box
-                    sx={{
-                      position: "absolute",
-                      bottom: 2,
-                      width: "100%",
-                      color: "white",
-                      p: 2,
-                      zIndex: 2,
+                      position: "relative",
+                      borderRadius: "12px",
+                      overflow: "hidden",
                     }}
                   >
-                    <Typography sx={{ lineHeight: 1.2 }}>
-                      This is a sample title for the second news item. It
-                      contains different content to test the layout and dynamic
-                      rendering. This is a sample title for the second news
-                      item. It contains different content to test the layout and
-                      dynamic rendering.
-                    </Typography>
-                    <div
-                      style={{
-                        display: "flex",
-                        gap: "5px",
-                        marginTop: "10px",
+                    <Box
+                      sx={{
+                        opacity: "0.8",
+                        position: "absolute",
+                        bottom: 0,
+                        width: "100%",
+                        height: "100%",
+                        background:
+                          "linear-gradient(to top, rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0))",
+                        zIndex: 1,
+                      }}
+                    />
+                    <Box
+                      sx={{
+                        position: "absolute",
+                        bottom: 2,
+                        width: "100%",
+                        color: "white",
+                        p: 2,
+                        zIndex: 2,
                       }}
                     >
-                      <Typography id="r-news-date">
-                        <FontAwesomeIcon icon={faCalendar} /> 26Nov, 2023
+                      <Typography sx={{ lineHeight: 1.2 }}>
+                        {news.title}
                       </Typography>
-                      <Typography id="r-news-date">
-                        <FontAwesomeIcon icon={faUser} /> By Nero
-                      </Typography>
-                    </div>
+                      <div
+                        style={{
+                          display: "flex",
+                          gap: "5px",
+                          marginTop: "10px",
+                        }}
+                      >
+                        <Typography id="r-news-date">
+                          <FontAwesomeIcon icon={faCalendar} />
+                          {new Date(news.createdAt).toISOString().split("T")[0]}
+                        </Typography>
+                        <Typography id="r-news-date">
+                          <FontAwesomeIcon icon={faUser} /> By
+                          {news.author}
+                        </Typography>
+                      </div>
+                    </Box>
                   </Box>
-                </Box>
+                ))}
               </Carousel>
             </div>
 
@@ -186,6 +192,7 @@ export const NewsBlogHero = ({ newsAndBlogs, recentPosts, featuredPosts }: NewsB
             >
               {newsAndBlogs.map((news) => (
                 <div
+                  onClick={() => navigate(`/news-details/${news?.id}`)}
                   key={news.id}
                   style={{
                     display: "flex",
@@ -229,7 +236,8 @@ export const NewsBlogHero = ({ newsAndBlogs, recentPosts, featuredPosts }: NewsB
                       }}
                     >
                       <Typography id="r-news-date">
-                        <FontAwesomeIcon icon={faCalendar} /> {new Date(news.createdAt).toISOString().split("T")[0]}
+                        <FontAwesomeIcon icon={faCalendar} />{" "}
+                        {new Date(news.createdAt).toISOString().split("T")[0]}
                       </Typography>
                       <Typography id="r-news-date">
                         <FontAwesomeIcon icon={faUser} /> By {news.author}
@@ -297,7 +305,7 @@ export const NewsBlogHero = ({ newsAndBlogs, recentPosts, featuredPosts }: NewsB
               }}
             >
               <Typography
-                style={{ background: color.firstColor }}
+                // style={{ background: color.firstColor }}
                 className="heading2"
               >
                 Featured Post
@@ -352,7 +360,8 @@ export const NewsBlogHero = ({ newsAndBlogs, recentPosts, featuredPosts }: NewsB
                     }}
                   >
                     <Typography id="r-news-date">
-                      <FontAwesomeIcon icon={faCalendar} />{new Date(news.createdAt).toISOString().split("T")[0]}
+                      <FontAwesomeIcon icon={faCalendar} />
+                      {new Date(news.createdAt).toISOString().split("T")[0]}
                     </Typography>
                     <Typography id="r-news-date">
                       <FontAwesomeIcon icon={faUser} /> By {news.author}
@@ -405,7 +414,7 @@ export const NewsBlogHero = ({ newsAndBlogs, recentPosts, featuredPosts }: NewsB
               }}
             >
               <Typography
-                style={{ background: color.firstColor }}
+                // style={{ background: color.firstColor }}
                 className="heading2"
               >
                 Recent Posts
@@ -417,7 +426,7 @@ export const NewsBlogHero = ({ newsAndBlogs, recentPosts, featuredPosts }: NewsB
                 key={news.id}
                 style={{
                   display: "flex",
-                  width: "100%",
+                  width: "fit-content",
                   height: "85px",
                   justifyContent: "space-between",
                   gap: "10px",
@@ -468,7 +477,8 @@ export const NewsBlogHero = ({ newsAndBlogs, recentPosts, featuredPosts }: NewsB
                     }}
                   >
                     <Typography id="r-news-date">
-                      <FontAwesomeIcon icon={faCalendar} /> {new Date(news.createdAt).toISOString().split("T")[0]}
+                      <FontAwesomeIcon icon={faCalendar} />{" "}
+                      {new Date(news.createdAt).toISOString().split("T")[0]}
                     </Typography>
                     <Typography id="r-news-date">
                       <FontAwesomeIcon icon={faUser} /> By {news.author}

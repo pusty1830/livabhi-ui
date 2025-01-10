@@ -133,7 +133,7 @@
   font-size: 34px !important;
   transition: all 0.3s ease 0s;
   /* border: solid 2px black; */
-  background: #fdb500;
+  background: #000000;
   padding: 2px 25px;
   margin-top: 48px;
   margin-bottom: 28px !important;
@@ -158,12 +158,12 @@
   margin-bottom: 18px !important;
   transition: all 0.3s ease 0s;
   /* border: solid 2px black; */
-  background: #fdb500;
+  background: black;
   padding: 2px 25px;
   border-radius: 44px;
   color: white;
   box-shadow: 0px 5px 40px -15px rgba(0, 0, 0, 0.27);
-  -webkit-box-shadow: 0px -5px 10px rgba(0, 0, 0, 0.37) inset;
+  -webkit-box-shadow: -5px -5px 20px rgba(255, 255, 255, 0.37) inset;
   /* -moz-box-shadow: 0px 5px 40px -10px rgba(0, 0, 0, 0.57); */
 }
 
@@ -177,20 +177,33 @@
   font-size: 34px !important;
   transition: all 0.3s ease 0s;
   /* border: solid 2px black; */
-  background: #fdb500;
+  background: black;
   padding: 2px 25px;
   margin-bottom: 0px !important;
 
   border-radius: 44px;
   color: white;
   box-shadow: 0px 5px 40px -15px rgba(0, 0, 0, 0.27);
-  -webkit-box-shadow: 0px -5px 10px rgba(0, 0, 0, 0.37) inset;
+  -webkit-box-shadow: -5px -5px 20px rgba(255, 255, 255, 0.37) inset;
   /* -moz-box-shadow: 0px 5px 40px -10px rgba(0, 0, 0, 0.57); */
 }
 
 .heading2:hover {
   text-shadow: 0px 0px 6px rgba(255, 255, 255, 1);
 }
+
+@media (max-width: 600px) {
+  .heading2 {
+  font-size: 24px !important;
+  }
+  .heading1 {
+  font-size: 24px !important;
+  }
+  .heading {
+  font-size: 24px !important;
+  }
+}
+
 
 #carousel {
   display: flex;

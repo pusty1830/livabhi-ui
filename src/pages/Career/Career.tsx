@@ -68,7 +68,8 @@ export const Career: React.FC = () => {
             backgroundSize: "cover",
             backgroundPosition: "center",
             width: "100%",
-            height: "100vh",
+            height: { xs: "50vh", md: "100vh" },
+
             display: "flex",
             flexDirection: { xs: "column-reverse", md: "row" },
             justifyContent: "space-around",
@@ -76,6 +77,8 @@ export const Career: React.FC = () => {
             alignItems: "center",
             "&::before": {
               content: '""',
+              height: { xs: "50vh", md: "100vh" },
+
               position: "absolute",
               top: 0,
               left: 0,
@@ -117,7 +120,7 @@ export const Career: React.FC = () => {
 
             <Typography
               style={{ marginTop: "15px", color: "white" }}
-              //   id="custom-button"
+            //   id="custom-button"
             >
               We're looking for passionate people to join us on our mission. We
               value flat hierarchies, clear communication, and full ownership
@@ -131,6 +134,7 @@ export const Career: React.FC = () => {
               zIndex: 2,
               color: "white",
               marginRight: { xs: "0px", sm: "40px" },
+              display: { xs: "none", sm: "block" },
 
               backgroundImage: "url(/assets/Acting.jpg)",
               border: "solid 1px white",

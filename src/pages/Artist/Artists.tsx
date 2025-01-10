@@ -79,13 +79,16 @@ export const Artists: React.FC = () => {
             backgroundSize: "cover",
             backgroundPosition: "center",
             width: "100%",
-            height: "100vh",
+            height: { xs: "50vh", md: "100vh" },
+
             display: "flex",
-            flexDirection: { xs: "column-reverse",md:'row'},
+            flexDirection: { xs: "column-reverse", md: 'row' },
             justifyContent: "space-around",
             mt: { xs: "-54px", md: "-94px" },
             alignItems: "center",
             "&::before": {
+              height: { xs: "50vh", md: "100vh" },
+
               content: '""',
               position: "absolute",
               top: 0,
@@ -106,7 +109,7 @@ export const Artists: React.FC = () => {
               flexDirection: "column",
               gap: "10px",
               zIndex: 2,
-                marginLeft: "10%",
+              marginLeft: "10%",
               animation: isVisible
                 ? `${slideInAnimation} 1s ease forwards`
                 : "none",
@@ -127,8 +130,9 @@ export const Artists: React.FC = () => {
             </Typography>
 
             <Typography
-              style={{ marginTop: "15px",   marginLeft: "0px"
-               }}
+              style={{
+                marginTop: "15px", marginLeft: "0px"
+              }}
               id="custom-button"
             >
               Become an Artist{" "}
@@ -141,10 +145,10 @@ export const Artists: React.FC = () => {
 
           <Box
             sx={{
-              // display:{xs:'none', sm:'block'},
+              display: { xs: 'none', sm: 'block' },
               zIndex: 2,
               color: "white",
-              marginRight: {xs:'0px', sm:"40px"},
+              marginRight: { xs: '0px', sm: "40px" },
               backgroundImage: "url(/assets/artist-5.png)",
               border: "solid 1px white",
             }}

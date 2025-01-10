@@ -9,6 +9,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import YouTube, { YouTubeEvent } from "react-youtube";
 import { PlayCircleOutlineRounded } from "@mui/icons-material";
 import color from "../../components/utils/Colors";
+import { useNavigate } from "react-router-dom";
 
 const responsive = {
   superLargeDesktop: {
@@ -71,12 +72,18 @@ interface NewsVideos {
 const NewsVideoCarousel = ({ trendingNewsVideos }: NewsVideos) => {
   const [playingIndex, setPlayingIndex] = useState<number | null>(null);
   const [players, setPlayers] = useState<{ [key: number]: any }>({});
+  const navigate = useNavigate();
 
-  const handlePlayButtonClick = (index: number) => {
+  const handlePlayButtonClick = (index: number, id: any) => {
+    navigate(`/news-details/${id}`)
     setPlayingIndex(index);
     if (players[index]) {
       players[index].playVideo();
     }
+  };
+  const extractVideoId = (url: string): string | undefined => {
+    const match = url.match(/(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/(?:[^/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?/\s]{11})/);
+    return match ? match[1] : undefined;
   };
 
   const onPlayerReady = (index: number) => {
@@ -90,16 +97,7 @@ const NewsVideoCarousel = ({ trendingNewsVideos }: NewsVideos) => {
       }
     };
   };
-  const newsData = [
-    {
-      id: 1,
-      imageUrl: "/assets/news-2.jpeg",
-      videoId: "fNGSIu94qQ0",
-      title: "Amin is another niche-specific news website template...",
-      date: "Aug 10, 2019",
-      author: "Ramael Rogers",
-    }
-  ];
+
 
   return (
     <Box
@@ -117,7 +115,7 @@ const NewsVideoCarousel = ({ trendingNewsVideos }: NewsVideos) => {
           className="heading"
           sx={{
             fontSize: "34px",
-            background: color.firstColor,
+            // background: color.firstColor,
             my: 3,
           }}
         >
@@ -137,13 +135,13 @@ const NewsVideoCarousel = ({ trendingNewsVideos }: NewsVideos) => {
             >
               {playingIndex === index ? (
                 <YouTube
-                  videoId={news.videoId}
+                  videoId={extractVideoId(news.videoUrl)}
                   opts={{ width: "100%", height: "280px" }}
                   onReady={onPlayerReady(index)}
                 />
               ) : (
                 <CardContent
-                  onClick={() => handlePlayButtonClick(index)}
+                  onClick={() => handlePlayButtonClick(index, news.id)}
                   style={{
                     position: "relative",
                     height: "100%",
@@ -226,13 +224,13 @@ const NewsVideoCarousel = ({ trendingNewsVideos }: NewsVideos) => {
             >
               {playingIndex === index ? (
                 <YouTube
-                  videoId={news.videoId}
+                  videoId={extractVideoId(news.videoUrl)}
                   opts={{ width: "100%", height: "280px" }}
                   onReady={onPlayerReady(index)}
                 />
               ) : (
                 <CardContent
-                  onClick={() => handlePlayButtonClick(index)}
+                  onClick={() => handlePlayButtonClick(index, news.id)}
                   style={{
                     position: "relative",
                     height: "100%",

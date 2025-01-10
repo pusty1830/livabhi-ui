@@ -190,7 +190,7 @@ const LoginPage = () => {
             sx={{
               borderRadius: "8px",
               backgroundImage: `url('/assets/logo.png')`,
-              backgroundSize: "90%",
+              backgroundSize: "60%",
               boxShadow: "0px 0px 20px rgba(255,255,255,0.5)",
               backgroundRepeat: "no-repeat",
               backgroundPosition: "center",

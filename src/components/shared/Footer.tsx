@@ -1,16 +1,52 @@
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 // import FooterLogo from "../../assets/g2i-logo.svg";
 import FacebookIcon from "@mui/icons-material/Facebook";
 import InstagramIcon from "@mui/icons-material/Instagram";
 import LinkedInIcon from "@mui/icons-material/LinkedIn";
 import TwitterIcon from "@mui/icons-material/Twitter";
-import { IconButton } from "@mui/material";
-
+import { Button, IconButton, Modal, TextField } from "@mui/material";
+import { Field, Form, Formik, useFormik } from "formik";
+import { toast } from "react-toastify";
+import * as Yup from "yup";
+import { inputSx } from "../utils/CommonStyle";
 const Footer: React.FC = () => {
+  const [open, setOpen] = useState(false);
+
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+
+  const validationSchema = Yup.object({
+    name: Yup.string().required("Name is required"),
+    message: Yup.string().required("Message is required"),
+    email: Yup.string().email("Invalid email").required("Email is required"),
+  });
+
+  const handleSubmit = (values: {
+    name: string;
+    email: string;
+    message: string;
+  }) => {
+    console.log("Form Data", values);
+    handleClose();
+  };
+
+  const formik = useFormik({
+    initialValues: {
+      name: "",
+      message: "",
+      email: "",
+    },
+    validationSchema,
+    onSubmit: (values, { resetForm }) => {
+      toast.success("Subscribed successfully!");
+      resetForm(); // Clear the form after submission
+    },
+  });
+
   return (
     <Box
       sx={{
@@ -23,7 +59,7 @@ const Footer: React.FC = () => {
       }}
     >
       <Grid container spacing={3} justifyContent="center">
-        <Grid item xs={12} sm={6} md={3}>
+        <Grid item xs={6} sm={6} md={3}>
           <Typography
             variant="h5"
             sx={{ marginBottom: "20px", fontWeight: "bold" }}
@@ -47,21 +83,140 @@ const Footer: React.FC = () => {
             </Link>
             <Link
               className="hover-text"
-              to="/contact-us"
+              to="#"
+              onClick={(e) => {
+                e.preventDefault();
+                handleOpen();
+              }}
               style={{ color: "#fff", textDecoration: "none" }}
             >
               Contact Us
             </Link>
-            <Link
+
+            <Modal open={open} onClose={handleClose}>
+              <Box
+                sx={{
+                  position: "absolute",
+                  top: "50%",
+                  left: "50%",
+                  transform: "translate(-50%, -50%)",
+                  width: 400,
+                  bgcolor: "background.paper",
+                  boxShadow: 24,
+                  p: 4,
+                  borderRadius: 2,
+                }}
+              >
+                <Typography variant="h6" component="h2" sx={{ mb: 2 }}>
+                  Contact Us
+                </Typography>
+
+                <Formik
+                  initialValues={{ name: "", email: "", message: "" }}
+                  validationSchema={validationSchema}
+                  onSubmit={handleSubmit}
+                >
+                  {() => (
+                    <Form>
+                      <Field
+                        sx={inputSx}
+                        as={TextField}
+                        name="name"
+                        placeholder="Name"
+                        fullWidth
+                        margin="normal"
+                        value={formik.values.name}
+                        onChange={formik.handleChange}
+                        onBlur={formik.handleBlur}
+                        error={
+                          formik.touched.name && Boolean(formik.errors.name)
+                        }
+                        helperText={formik.touched.name && formik.errors.name}
+                      />
+
+                      <TextField
+                        sx={inputSx}
+                        fullWidth
+                        // className="input-root"
+                        id="email"
+                        name="email"
+                        placeholder="Email Address"
+                        // margin="normal"
+                        value={formik.values.email}
+                        onChange={formik.handleChange}
+                        onBlur={formik.handleBlur}
+                        error={
+                          formik.touched.email && Boolean(formik.errors.email)
+                        }
+                        helperText={formik.touched.email && formik.errors.email}
+                      />
+
+                      <TextField
+                        multiline
+                        rows={2}
+                        sx={{
+                          ...inputSx,
+                          "& .MuiInputBase-root": {
+                            resize: "vertical",
+                            minHeight: "40px",
+                            marginTop: "10px",
+                          },
+                          "& textarea": {
+                            resize: "vertical",
+                            minHeight: "40px",
+                            padding: "0px 14px",
+                          },
+                        }}
+                        fullWidth
+                        id="message"
+                        name="message"
+                        placeholder="Message"
+                        margin="normal"
+                        value={formik.values.message}
+                        onChange={formik.handleChange}
+                        onBlur={formik.handleBlur}
+                        error={
+                          formik.touched.message &&
+                          Boolean(formik.errors.message)
+                        }
+                        helperText={
+                          formik.touched.message && formik.errors.message
+                        }
+                      />
+
+                      <Button
+                        type="submit"
+                        variant="contained"
+                        id="custom-button"
+                        style={{
+                          borderColor: "black",
+                          borderWidth: "4px",
+                          color: "black",
+                          fontSize: "16px",
+                          padding: "10px 20px",
+                          margin: 0,
+                          marginTop: "20px",
+                          width: "100%",
+                          boxShadow: "none",
+                        }}
+                      >
+                        Submit
+                      </Button>
+                    </Form>
+                  )}
+                </Formik>
+              </Box>
+            </Modal>
+            {/* <Link
               className="hover-text"
               to="/about-us"
               style={{ color: "#fff", textDecoration: "none" }}
             >
               About Us
-            </Link>
+            </Link> */}
           </Box>
         </Grid>
-        <Grid item xs={12} sm={6} md={3}>
+        <Grid item xs={6} sm={6} md={3}>
           <Typography
             variant="h5"
             sx={{ marginBottom: "20px", fontWeight: "bold" }}
@@ -99,7 +254,7 @@ const Footer: React.FC = () => {
             </Link>
           </Box>
         </Grid>
-        <Grid item xs={12} sm={6} md={3}>
+        <Grid item xs={6} sm={6} md={3}>
           <Typography
             variant="h5"
             sx={{ marginBottom: "20px", fontWeight: "bold" }}
@@ -137,7 +292,7 @@ const Footer: React.FC = () => {
             </Link>
           </Box>
         </Grid>
-        <Grid item xs={12} sm={6} md={3}>
+        <Grid item xs={6} sm={6} md={3}>
           <Typography
             variant="h5"
             sx={{ marginBottom: "20px", fontWeight: "bold" }}
@@ -186,7 +341,7 @@ const Footer: React.FC = () => {
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
-          gap: "50px",
+          gap: { xs: "0px", md: "50px" },
           marginTop: "20px",
           flexDirection: { xs: "column", md: "row" },
         }}

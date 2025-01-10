@@ -61,6 +61,7 @@ const courseUploadForm = () => {
     description: "",
     tags: "",
     price: "",
+    discount: "",
     productType: "",
     releaseDate: "",
     thumbnail: null,
@@ -80,6 +81,7 @@ const courseUploadForm = () => {
       category: values.category,
       tags: values.tags,
       price: values.price,
+      discount: values.discount,
       productType: values.productType,
       licenseType: values.licenseType,
       thumbnail: values.thumbnail,
@@ -251,6 +253,18 @@ const courseUploadForm = () => {
                     fullWidth
                     error={touched.price && Boolean(errors.price)}
                     helperText={touched.price && errors.price}
+                  />
+                </Grid>
+                <Grid item xs={12}>
+                  <Field
+                    sx={inputSx}
+                    name="discount"
+                    as={TextField}
+                    label="Discount ($)"
+                    type="number"
+                    fullWidth
+                    error={touched.discount && Boolean(errors.discount)}
+                    helperText={touched.discount && errors.discount}
                   />
                 </Grid>
 
